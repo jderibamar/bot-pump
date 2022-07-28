@@ -29,7 +29,7 @@ export class Funcoes
 
             if(cnt >= 4)
             {
-               pumps.push({ s: ar[i].s, h: ar[i].h, l: ar[i].l, perc: ar[i].dif, d: ar[i].d, cont: cnt, exc: exc })
+               pumps.push({ s: ar[i].s, h: ar[i].h, l: ar[i].l, perc: ar[i].dif, rsi: ar[i].rsi, cont: cnt, exc: exc })
                // console.log(s + ' -> cont: ' + cnt)
             }
          }
@@ -56,10 +56,36 @@ export class Funcoes
       return pumps
    }
 
-   ordemDec(a: any, b: any) // ORDENAR DO MAIOR PARA O MENOR
-   {
-      return a.perc > b.perc
-   }
+   calcRSI(closes = [])
+    {
+        let ganhos = 0, perdas = 0
+
+        //CLOSES DEVE SER IGUAL A 14 que é o período do RSI
+        for(let i = closes.length - 14; i < closes.length; i++)
+        {
+            const diff = closes[i] - closes[i - 1] // compara o candle atual com o anterior
+  
+            if(diff >= 0 )
+                ganhos += diff
+            else
+               perdas -= diff     
+        }
+
+        const forca = ganhos / perdas
+
+        // Fórmula do RSI
+        // RSI acima de 70 = mercado SOBRECOMPRADO e abaixo de 30 SOBREVENDIDO
+
+        let rsi = 100 - (100 / (1 + forca))
+
+        if(rsi > 70)
+            return 'SOBRECOMPRADO'
+        
+        else if(rsi < 30)
+            return 'SOBREVENDIDO'
+        else
+            return ''
+    }
 
    uniq(a) // ELIMINA ELEMENTOS REPETIDOS DE UM ARRAY
    {

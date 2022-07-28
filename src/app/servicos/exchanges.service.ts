@@ -18,7 +18,10 @@ export class ExchangesService
             s = await api_info.json(),
             p = s.symbols, // PARES
             perc = 0, // DIFERENÇA PERCENTAL ENTRE MAIOR ALTA E MENOR BAIXA
-            pumps = []
+            pumps = [],
+            c = [], // ARRAY COM O CLOSES PRICES
+            rsi = ''
+            
 
             for(let i in p)
             {
@@ -28,20 +31,25 @@ export class ExchangesService
                     let kl_api = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${int}&limit=180`),
                     k = await kl_api.json()
 
-                    for(let i in k)
+                    for(let i = 0; i < k.length; i++)
                     {
                         let time = new Date(k[i][0]),
-                        o = k[i][1],
-                        h = k[i][2],
-                        l = k[i][3],
-                        c = k[i][4]
+                            o = k[i][1],
+                            h = k[i][2],
+                            l = k[i][3]
+                        
+                        c.push(k[i][4])
+                       
+
+                        if(i == k.length -1)
+                            rsi = this.funcS.calcRSI(c)
 
                         if(o < c) // ABERTURA TEM QUE SER MENOR QUE O FECHAMENTO 
                         {
                             perc = (h - l) / l * 100
 
                             if(perc > 50)
-                                pumps.push({ s: symbol, h: h, l: l, dif: perc, d: time, o: o, c: c })
+                                pumps.push({ s: symbol, h: h, l: l, dif: perc, rsi: rsi, d: time })
                         }
                     }
                 }
@@ -50,13 +58,10 @@ export class ExchangesService
             // for(let i in pumps)
             // {
             //     console.log(pumps[i].s + ' h: ' + pumps[i].h + ' l: ' + pumps[i].l + ' dif: ' + pumps[i].dif 
-            //     + ' o: ' + pumps[i].o + ' c: ' + pumps[i].c + ' Data: ' + pumps[i].d)
+            //     + ' rsi: ' + pumps[i].rsi)
             // }
 
-
-            let pp = this.funcS.count(pumps, 'Binance'),
-                ppCp = pp,
-                lf = []
+            let pp = this.funcS.count(pumps, 'Binance')
 
             for(let i = 0; i < pp.length; i++)
             {
@@ -97,6 +102,26 @@ export class ExchangesService
         return pp
     }
     
+    async testeCandle()
+    {
+        let kl_api = await fetch(`https://api.binance.com/api/v3/klines?symbol=UNFIUSDT&interval=1d&limit=180`),
+            k = await kl_api.json()
 
+        for(let i in k)
+        {
+            let time = new Date(k[i][0]),
+            o = k[i][1],
+            h = k[i][2],
+            l = k[i][3],
+            c = k[i][4]
+
+            if(o < c) // ABERTURA TEM QUE SER MENOR QUE O FECHAMENTO 
+            {
+                let perc = (h - l) / l * 100
+
+                console.log('Percentual -> ' + perc + ' H -> ' + h + ' L -> ' + l + ' Data -> ' + time)
+            }
+        }
+    }
 
 }

@@ -26,7 +26,7 @@ export class AppComponent implements OnInit
      private mexcS: MexcService, private btxS: BittrexService, private excS: ExchangesService
   ) {}
 
-    colunasTab: string[] = ['moeda', 'exc', 'high', 'low', 'ocorrencias', 'percentual']
+    colunasTab: string[] = ['moeda', 'exc', 'high', 'low', 'ocorrencias', 'rsi', 'percentual']
     dataSource: any 
 
     @ViewChild(MatSort) sort: MatSort
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit
         // setInterval(() => location.reload() , 900 * 1000)
         this.loadData()
 
-        // this.excS.pumpsBinance()
+        // this.excS.testeCandle()
     }
 
     // ngAfterViewInit() 

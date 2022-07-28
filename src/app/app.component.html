@@ -57,6 +57,14 @@
         <td mat-cell *matCellDef="let el"> {{el.cont}} </td>
       </ng-container>
 
+      <!-- RSI -->
+      <ng-container matColumnDef="rsi">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+           RSI
+        </th>
+        <td mat-cell *matCellDef="let el"> {{el.rsi}} </td>
+      </ng-container>
+
       <!-- Variação percentual -->
       <ng-container matColumnDef="percentual">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
