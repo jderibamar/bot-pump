@@ -1,13 +1,14 @@
 <mat-toolbar color="primary">
   <span> BOT que monitora PUMPS com porcentagem superior a 50% nos últimos 6 meses - Analista: Ellen Duarte </span>
+  <span id="total_ativos"> Total de ativos: {{ total_ativos }} </span>
   <span class="spacer"></span>
- </mat-toolbar>
+</mat-toolbar>
 
   <div class="form">
-    <mat-form-field floatPlaceholder="never" color="accent">
-      <input matInput #filter placeholder="Pesquisar aqui...">
-    </mat-form-field>
-   </div>
+     <mat-form-field floatPlaceholder="never" color="accent">
+       <input matInput #filter placeholder="Pesquisar aqui...">
+     </mat-form-field>
+  </div>
 
     <table mat-table [dataSource]="dataSource" matSort class="mat-cell" >
 

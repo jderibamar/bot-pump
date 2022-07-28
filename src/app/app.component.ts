@@ -21,10 +21,12 @@ import { fromEvent } from 'rxjs'
 
 export class AppComponent implements OnInit
 {
-  constructor
-  (
-     private mexcS: MexcService, private btxS: BittrexService, private excS: ExchangesService
-  ) {}
+    total_ativos = 0
+
+    constructor
+    (
+      private mexcS: MexcService, private btxS: BittrexService, private excS: ExchangesService
+    ) {}
 
     colunasTab: string[] = ['moeda', 'exc', 'high', 'low', 'ocorrencias', 'rsi', 'percentual']
     dataSource: any 
@@ -75,6 +77,8 @@ export class AppComponent implements OnInit
   
           this.dataSource = new MatTableDataSource(todasExcs)
           this.dataSource.sort = this.sort
+
+          this.total_ativos = todasExcs.length
   
           // console.log('Array geral: ' + todasExcs)
           // ...crexExmo, ...crexMexc, ...crexBittrex,  ...crexCoinex, ...crexChangellyPro, ...crexAscendex, ...crexZtb, ...crexFmfw,

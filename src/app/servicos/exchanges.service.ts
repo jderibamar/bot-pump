@@ -83,6 +83,7 @@ export class ExchangesService
                 return (b.perc > a.perc) ? 1 : ((a.perc > b.perc) ? -1 : 0)
             })
 
+
             // for(let i in pp)
             //     console.log(pp[i].s + ' -> DIF: ' + pp[i].perc + ' Data: ' + pp[i].d + ' h: ' + pp[i].h + ' l: ' + pp[i].l
             //     + ' cont: ' + pp[i].cont + ' Exchange: ' + pp[i].exc)
